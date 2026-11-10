@@ -1,9 +1,354 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="de">
 <head>
-    <title>Robert Hilgart</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a0e18">
+  <title>Personal Website</title>
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0a0e18;
+      --text: #f2f5fa;
+      --muted: #a0a9bd;
+      --accent: #91b7ff;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      min-height: 100dvh;
+      overflow-x: hidden;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, "Segoe UI", Arial, sans-serif;
+    }
+
+    .background {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
+      pointer-events: none;
+      background: radial-gradient(
+        ellipse at 50% 85%, #14213d 0%, #0a0e18 65%
+      );
+    }
+
+    .orb {
+      position: absolute;
+      width: 55vw;
+      height: 55vw;
+      min-width: 380px;
+      min-height: 380px;
+      border-radius: 50%;
+      filter: blur(95px);
+      opacity: .22;
+      animation: float 18s ease-in-out infinite alternate;
+    }
+
+    .orb.one {
+      top: -25%;
+      left: -15%;
+      background: #4169e1;
+    }
+
+    .orb.two {
+      right: -20%;
+      bottom: -35%;
+      background: #7354ce;
+      animation-delay: -9s;
+    }
+
+    @keyframes float {
+      from { transform: translate(0, 0) scale(1); }
+      to { transform: translate(12%, 8%) scale(1.25); }
+    }
+
+    header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 32px clamp(24px, 6vw, 90px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      font-weight: 700;
+      letter-spacing: -1px;
+      font-size: 20px;
+    }
+
+    .brand span { color: var(--accent); }
+
+    .language {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px;
+      border: 1px solid #ffffff20;
+      border-radius: 100px;
+      background: #ffffff08;
+    }
+
+    .language button {
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      padding: 8px 13px;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: .25s;
+      font: inherit;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .language button.active {
+      background: #ffffff18;
+      color: white;
+    }
+
+    .language button:hover {
+      color: white;
+    }
+
+    main {
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 120px 24px 100px;
+      text-align: center;
+    }
+
+    .content {
+      max-width: 850px;
+      animation: appear 1.3s ease both;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid #ffffff20;
+      background: #ffffff08;
+      color: var(--accent);
+      border-radius: 100px;
+      padding: 10px 17px;
+      font-size: 12px;
+      letter-spacing: 1px;
+      margin-bottom: 32px;
+    }
+
+    .pulse {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #85e6bb;
+      box-shadow: 0 0 0 0 #85e6bb55;
+      animation: pulse 2.5s infinite;
+    }
+
+    h1 {
+      font-size: clamp(48px, 8vw, 96px);
+      font-weight: 700;
+      letter-spacing: -.065em;
+      line-height: 1.12;
+      margin: 0 0 30px;
+    }
+
+    .gradient {
+      background: linear-gradient(
+        100deg, #ffffff, #9abfff, #b7a0fa
+      );
+      background-size: 200% auto;
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmer 8s linear infinite;
+    }
+
+    .description {
+      font-size: clamp(16px, 2vw, 20px);
+      line-height: 1.8;
+      color: var(--muted);
+      margin: 0 auto;
+      max-width: 590px;
+    }
+
+    .divider {
+      width: 65px;
+      height: 2px;
+      margin: 38px auto 0;
+      background: linear-gradient(
+        90deg, transparent, var(--accent), transparent
+      );
+    }
+
+    footer {
+      position: absolute;
+      bottom: 28px;
+      width: 100%;
+      text-align: center;
+      font-size: 12px;
+      color: #777f91;
+      letter-spacing: .5px;
+    }
+
+    @keyframes appear {
+      from {
+        opacity: 0;
+        transform: translateY(25px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes shimmer {
+      to { background-position: 200% center; }
+    }
+
+    @keyframes pulse {
+      70% { box-shadow: 0 0 0 9px transparent; }
+      100% { box-shadow: 0 0 0 0 transparent; }
+    }
+
+    @media (max-width: 600px) {
+      header { padding: 22px 24px; }
+      .tag { margin-bottom: 26px; }
+      h1 { letter-spacing: -.05em; }
+      .orb { filter: blur(70px); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
 </head>
+
 <body>
-    <h1>Hi! Das ist meine Website.</h1>
+  <div class="background" aria-hidden="true">
+    <div class="orb one"></div>
+    <div class="orb two"></div>
+  </div>
+
+  <header>
+    <div class="brand">hello<span>.</span></div>
+
+    <nav class="language" aria-label="Language">
+      <button id="de" class="active"
+              aria-pressed="true" onclick="setLang('de')">
+        DE
+      </button>
+      <button id="en"
+              aria-pressed="false" onclick="setLang('en')">
+        EN
+      </button>
+    </nav>
+  </header>
+
+  <main>
+    <div class="content">
+      <div class="tag">
+        <span class="pulse"></span>
+        <span id="status">IM AUFBAU</span>
+      </div>
+
+      <h1>
+        <span id="greeting">Hi, das ist meine</span><br>
+        <span id="headline" class="gradient">
+          persönliche Website.
+        </span>
+      </h1>
+
+      <p id="description" class="description">
+        Schön, dass du vorbeischaust.<br>
+        Aktuell arbeite ich noch am Aufbau dieser Seite.
+      </p>
+
+      <div class="divider"></div>
+    </div>
+  </main>
+
+  <footer>
+    © <span id="year"></span> ·
+    <span id="footerText">Mit Liebe zum Detail gestaltet.</span>
+  </footer>
+
+  <script>
+    const translations = {
+      de: {
+        status: "IM AUFBAU",
+        greeting: "Hi, das ist meine",
+        headline: "persönliche Website.",
+        description:
+          "Schön, dass du vorbeischaust.<br>" +
+          "Aktuell arbeite ich noch am Aufbau dieser Seite.",
+        footer: "Mit Liebe zum Detail gestaltet."
+      },
+      en: {
+        status: "WORK IN PROGRESS",
+        greeting: "Hi, this is my",
+        headline: "personal website.",
+        description:
+          "Nice to have you here.<br>" +
+          "I'm currently working on building this website.",
+        footer: "Crafted with attention to detail."
+      }
+    };
+
+    function setLang(lang) {
+      const t = translations[lang];
+
+      document.documentElement.lang = lang;
+      document.getElementById("status").textContent = t.status;
+      document.getElementById("greeting").textContent = t.greeting;
+      document.getElementById("headline").textContent = t.headline;
+      document.getElementById("description").innerHTML = t.description;
+      document.getElementById("footerText").textContent = t.footer;
+
+      ["de", "en"].forEach(code => {
+        const button = document.getElementById(code);
+        const active = code === lang;
+        button.classList.toggle("active", active);
+        button.setAttribute("aria-pressed", String(active));
+      });
+
+      try {
+        localStorage.setItem("language", lang);
+      } catch (_) {}
+    }
+
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+
+    let savedLanguage = null;
+    try {
+      savedLanguage = localStorage.getItem("language");
+    } catch (_) {}
+
+    const browserLanguage =
+      navigator.language.toLowerCase().startsWith("de")
+        ? "de" : "en";
+
+    setLang(
+      ["de", "en"].includes(savedLanguage)
+        ? savedLanguage : browserLanguage
+    );
+  </script>
 </body>
 </html>
